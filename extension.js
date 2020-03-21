@@ -19,17 +19,14 @@ function activate(context) {
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.helloWorld', async function () {
-		// The code you place here will be executed every time your command is executed
-
 		try {
-			// Display a message box to the user
-			vscode.window.showInformationMessage('Hello World!');
-
 			// make sure to have two files
 			const file1 = __dirname + '/a.txt';
 			const file2 = __dirname + '/b.txt';
 			fs.writeFileSync(file1, 'a', { flag: 'w+' });  // touch
 			fs.writeFileSync(file2, 'b', { flag: 'w+' });  // touch
+
+			await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
 
 			// open file1 **without pinning**
 			await vscode.window.showTextDocument(vscode.Uri.file(file1));
